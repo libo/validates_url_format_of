@@ -11,8 +11,15 @@ module ValidatesUrlFormatOf
     \Z
   }iux
 
-  DEFAULT_MESSAGE     = 'does not appear to be a valid URL'
-  DEFAULT_MESSAGE_URL = 'does not appear to be valid'
+  def default_message
+    I18n.t("activerecord.errors.messages.not_valid_url_with_URL",
+           :default => 'does not appear to be a valid URL' )
+  end
+
+  def default_message_url
+    I18n.t("activerecord.errors.messages.not_valid_url",
+           :default => 'does not appear to be valid' )
+  end
   
   def validates_url_format_of(*attr_names)
     options = { :allow_nil => false,
@@ -21,7 +28,7 @@ module ValidatesUrlFormatOf
     options = options.merge(attr_names.pop) if attr_names.last.is_a?(Hash)
 
     attr_names.each do |attr_name|
-      message = attr_name.to_s.match(/(_|\b)URL(_|\b)/i) ? DEFAULT_MESSAGE_URL : DEFAULT_MESSAGE
+      message = attr_name.to_s.match(/(_|\b)URL(_|\b)/i) ? default_message_url : default_message
       validates_format_of(attr_name, { :message => message }.merge(options))
     end
   end
