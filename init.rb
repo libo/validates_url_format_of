@@ -10,15 +10,18 @@ module ValidatesUrlFormatOf
     ([/?]\S*)?                                                   # optional /whatever or ?whatever
     \Z
   }iux
+  
+  DEFAULT_MESSAGE     = 'does not appear to be a valid URL'
+  DEFAULT_MESSAGE_URL = 'does not appear to be valid'
 
   def default_message
     I18n.t("activerecord.errors.messages.not_valid_url_with_URL",
-           :default => 'does not appear to be a valid URL' )
+           :default => DEFAULT_MESSAGE )
   end
 
   def default_message_url
     I18n.t("activerecord.errors.messages.not_valid_url",
-           :default => 'does not appear to be valid' )
+           :default => DEFAULT_MESSAGE_URL )
   end
   
   def validates_url_format_of(*attr_names)
