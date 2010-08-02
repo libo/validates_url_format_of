@@ -15,13 +15,21 @@ module ValidatesUrlFormatOf
   DEFAULT_MESSAGE_URL = 'does not appear to be valid'
 
   def default_message
-    I18n.t("activerecord.errors.messages.not_valid_url_with_URL",
-           :default => DEFAULT_MESSAGE )
+    begin
+      I18n.t("activerecord.errors.messages.not_valid_url_with_URL",
+             :default => DEFAULT_MESSAGE )
+    rescue NameError # For Rails < 2.2.1
+      DEFAULT_MESSAGE
+    end
   end
 
   def default_message_url
-    I18n.t("activerecord.errors.messages.not_valid_url",
-           :default => DEFAULT_MESSAGE_URL )
+    begin
+      I18n.t("activerecord.errors.messages.not_valid_url",
+             :default => DEFAULT_MESSAGE_URL )
+    rescue NameError # For Rails < 2.2.1
+      DEFAULT_MESSAGE_URL
+    end
   end
   
   def validates_url_format_of(*attr_names)
